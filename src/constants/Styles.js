@@ -5,10 +5,13 @@ const BORDER_RADIUS = 10;
 
 export default StyleSheet.create({
 	text: {
-		color: Colors.text.primary
+		color: Colors.text.primary,
+		fontFamily: "Roboto-Regular"
 	},
 	heading: {
-		fontSize: 24
+		fontSize: 24,
+		fontFamily: "Roboto-Bold",
+		letterSpacing: 1
 	},
 	container: {
 		flex: 1,
