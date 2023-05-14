@@ -6,14 +6,13 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import Colors from "./src/constants/Colors.js";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faBars, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faComment, faHeart, faMagnifyingGlass, faShuffle } from "@fortawesome/free-solid-svg-icons";
 import HeaderLeft from "./src/components/header/HeaderLeft.js";
 import HeaderRight from "./src/components/header/HeaderRight.js";
 import * as Font from 'expo-font';
-import * as SplashScreen from "expo-splash-screen";
 
 const Stack = createNativeStackNavigator();
-library.add(faMagnifyingGlass, faBars);
+library.add(faMagnifyingGlass, faBars, faHeart, faComment, faShuffle);
 
 let fonts = {
 	"Roboto-Regular": require("./assets/fonts/Roboto/Roboto-Regular.ttf"),
@@ -41,17 +40,20 @@ export default class App extends Component {
 		return (
 			<SafeAreaProvider>
 				<NavigationContainer>
-					<Stack.Navigator initialRouteName="Home" screenOptions={{
-						headerStyle: {
-							backgroundColor: Colors.background.tertiary,
-							height: 50
-						},
-						headerTintColor: Colors.text.primary,
-						headerShadowVisible: false,
-						headerLeft: (props) => <HeaderLeft {...props}/>,
-						headerTitle: "",
-						headerRight: (props) => <HeaderRight {...props}/>,
-					}}>
+					<Stack.Navigator
+						initialRouteName="Home"
+						screenOptions={{
+							headerStyle: {
+								backgroundColor: Colors.background.tertiary,
+								height: 50
+							},
+							headerTintColor: Colors.text.primary,
+							headerShadowVisible: false,
+							headerLeft: (props) => <HeaderLeft {...props}/>,
+							headerTitle: "",
+							headerRight: (props) => <HeaderRight {...props}/>,
+						}}
+					>
 						<Stack.Screen
 							name="Home"
 							component={Home}

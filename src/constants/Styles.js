@@ -6,7 +6,8 @@ const BORDER_RADIUS = 10;
 export default StyleSheet.create({
 	text: {
 		color: Colors.text.primary,
-		fontFamily: "Roboto-Regular"
+		fontFamily: "Roboto-Regular",
+		textAlign: "left"
 	},
 	heading: {
 		fontSize: 24,
