@@ -1,3 +1,5 @@
+![Logo](https://github.com/Prozilla/Nexilis-App/assets/63581117/8b1f8c2e-a35a-4ef0-a985-b4d9bf3dcdf4)
+
 # Nexilis
 An alternative Reddit app built with React Native by Prozilla. The Nexilis app aims to provide a smoother and more customizable interface for Reddit.
 
