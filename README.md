@@ -1,4 +1,4 @@
-![Logo](github/Logo.png)
+<img src="github/Logo.png" width="128" height="128"/>
 
 # Nexilis
 An alternative Reddit app built with React Native by Prozilla. The Nexilis app aims to provide a smoother and more customizable interface for Reddit.
