@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { Component, PureComponent } from "react";
 import Styles from "../../constants/Styles";
 import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
 import RenderHTML from "react-native-render-html";
@@ -6,7 +6,7 @@ import { decodeString, removeUrlQueries } from "../..";
 import Colors from "../../constants/Colors";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
-export default class Post extends Component {
+export default class Post extends PureComponent {
 	getMedia(post) {
 		function generateImageComponent(image) {
 			if (!image.url)
@@ -21,13 +21,10 @@ export default class Post extends Component {
 
 			return (<Image 
 				nativeID="post-media"
-				// width={image.width}
-				// height={image.height}
 				resizeMode="contain"
 				style={[styles.image, styles.postMedia, style]}
 				source={{ uri: url }}
 				onError={({ nativeEvent: { error } }) => { console.error(error) }}
-				// onLoad={({ nativeEvent: { source: { width, height } } }) => { console.log(`Loaded image ${url}`) }}
 			/>);
 		}
 
@@ -196,11 +193,9 @@ const styles = StyleSheet.create({
 		justifyContent: "flex-start",
 	},
 	postMediaContainer: {
-		// maxWidth: "100%",
-		// maxHeight: "100%",
 		flexShrink: 1,
-		alignItems: "flex-start",
-		justifyContent: "flex-start",
+		alignItems: "center",
+		justifyContent: "center",
 		resizeMode: "contain",
 		objectFit: "contain"
 	},
@@ -209,9 +204,7 @@ const styles = StyleSheet.create({
 		maxHeight: "100%",
 		resizeMode: "contain",
 		objectFit: "contain",
-		// flexGrow: 1,
 		flexShrink: 1,
-	// 	backgroundColor: "red",
 	},
 	postFooter: {
 		flexDirection: "row",
