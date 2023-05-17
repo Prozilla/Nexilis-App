@@ -5,7 +5,7 @@
  * Made by Prozilla
  */
 
-const FILTERS = [
+const SORT_TYPES = [
 	"best",
 	"hot",
 	"new",
@@ -16,16 +16,19 @@ const FILTERS = [
 
 const DEFAULTS = {
 	subreddits: ["itookapicture"],
-	filter: FILTERS[1]
+	sort: SORT_TYPES[1],
+	allowNsfw: true
 };
 
 const POSTS_PER_FETCH = 4; // Should be 10
 const FALLBACK_SUBREDDIT_ICON = "https://www.iconpacks.net/icons/2/free-reddit-logo-icon-2436-thumb.png";
 
 class Feed {
-	constructor(subreddits = DEFAULTS.subreddits, filter = DEFAULTS.filter) {
+	constructor(subreddits = DEFAULTS.subreddits, sort = DEFAULTS.sort, allowNsfw = DEFAULTS.allowNsfw) {
 		this.subreddits = subreddits;
-		this.filter = filter;
+		this.sort = sort;
+		this.allowNsfw = allowNsfw;
+
 		this.lastPostId = null;
 	}
 
@@ -37,8 +40,8 @@ class Feed {
 		this.subreddits.push(subreddit);
 	}
 
-	setFilter(filter) {
-		this.filter = filter;
+	setSort(sort) {
+		this.sort = sort;
 	}
 }
 
@@ -52,8 +55,8 @@ export async function refreshFeed() {
 }
 
 export async function fetchPosts() {
-	const { subreddits, filter } = currentFeed;
-	let url = `https://www.reddit.com/r/${subreddits.join("+")}/${filter}.json?limit=${POSTS_PER_FETCH}`;
+	const { subreddits, sort, allowNsfw } = currentFeed;
+	let url = `https://www.reddit.com/r/${subreddits.join("+")}/${sort}.json?limit=${POSTS_PER_FETCH}`;
 
 	if (currentFeed.lastPostId)
 		url += `&after=t3_${currentFeed.lastPostId}`;
@@ -69,8 +72,10 @@ export async function fetchPosts() {
 	posts = await Promise.all(posts.map(async (post) => {
 		currentFeed.lastPostId = post.id;
 
+		// Extract data from post
 		return {
 			title: post.title,
+			id: post.id,
 			body: post.selftext_html,
 			subreddit: post.subreddit,
 			upvotesCount: formatNumber(post.score),
@@ -82,11 +87,30 @@ export async function fetchPosts() {
 			media: post.media,
 			preview: post.preview
 		}
+	}).filter((post) => {
+		// Filter NSFW posts
+		return allowNsfw || !post.nsfw;
 	})).catch((error) => {
 		console.error(error);
 	});
 
+	// posts.forEach(console.log);
+
 	return posts;
+}
+
+export async function fetchComments(postId) {
+	const url = `https://www.reddit.com/comments/${postId}/.json`;
+
+	const comments = await fetch(url).then((result) => {
+		return result.json();
+	}).catch((error) => {
+		console.error(error);
+	});
+
+	// console.log(comments);
+
+	return comments;
 }
 
 export function decodeString(string) {
@@ -145,7 +169,7 @@ async function fetchSubredditIcon(subreddit) {
 			const newSource = result.data.icon_img ? result.data.icon_img : result.data.community_icon;
 
 			if (newSource)
-				source = newSource;
+				source = removeUrlQueries(newSource);
 
 			return;
 		}).catch((error) => {

@@ -4,6 +4,13 @@ import Colors from "./Colors.js";
 const BORDER_RADIUS = 10;
 
 export default StyleSheet.create({
+	screen: {
+		flex: 1,
+		flexDirection: "column",
+		alignItems: "center",
+		justifyContent: "flex-start",
+		backgroundColor: Colors.background.primary
+	},
 	text: {
 		color: Colors.text.primary,
 		fontFamily: "Roboto-Regular",
@@ -24,6 +31,10 @@ export default StyleSheet.create({
 	image: {
 		width: 35,
 		height: 35,
+	},
+	icon: {
+		border: null,
+		outline: null
 	},
 	input: {
 		color: Colors.text.primary,

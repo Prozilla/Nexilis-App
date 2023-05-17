@@ -12,7 +12,7 @@ export default class Feed extends Component {
 		refreshing: false
 	};
 
-	async loadFeed() {
+	loadFeed() {
 		this.setState({ loading: true });
 		fetchPosts().then((posts) => {
 			console.log("Loaded feed");
@@ -51,10 +51,10 @@ export default class Feed extends Component {
 		this.list.scrollToOffset({ offset: 0 });
 	}
 
-	renderPost({ item: post }) {
+	renderPost = ({ item: post }) => {
 		return (
 			<View>
-				<Post data={post}/>
+				<Post data={post} navigation={this.props.navigation} preview={true}/>
 				<View
 					style={{
 						width: "100%",
