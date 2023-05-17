@@ -17,13 +17,18 @@ export default class Post extends Component {
 			if (image.width && image.height)
 				style.aspectRatio = image.width / image.height;
 
-			const url = decodeString(image.url);
-			console.log(url);
+			let url = decodeString(image.url);
+
 			return (<Image 
 				nativeID="post-media"
-				style={[styles.image, style]}
-				source={{ uri: url }}/>
-			);
+				// width={image.width}
+				// height={image.height}
+				resizeMode="contain"
+				style={[styles.image, styles.postMedia, style]}
+				source={{ uri: url }}
+				onError={({ nativeEvent: { error } }) => { console.error(error) }}
+				// onLoad={({ nativeEvent: { source: { width, height } } }) => { console.log(`Loaded image ${url}`) }}
+			/>);
 		}
 
 		if (post.media || (post.preview && post.preview.reddit_video_preview)) {
@@ -82,8 +87,6 @@ export default class Post extends Component {
 		if (!post)
 			return;
 
-		console.log(post);
-
 		function generateCounterComponent(iconName, label, value) {
 			const color = Colors.text.tertiary;
 
@@ -98,21 +101,13 @@ export default class Post extends Component {
 		const elements = {
 			title: <Text nativeID="post-title" style={Styles.text}>{post.title}</Text>,
 			subreddit: <Text nativeID="post-subreddit-name" style={[Styles.text, { color: Colors.text.secondary }]}>{post.subreddit}</Text>,
-			subredditIcon: <Image nativeID="post-subreddit-icon" style={[styles.image, { width: 20, height: 20, borderRadius: 10 }]} source={{ uri: post.subredditIcon }}/>,
+			subredditIcon: <Image nativeID="post-subreddit-icon" resizeMode="contain" style={[styles.image, styles.postSubredditIcon]} source={{ uri: post.subredditIcon }}/>,
 			timestamp: <Text nativeID="post-timestamp" style={[Styles.text, { color: Colors.text.tertiary }]}>{post.relativeTime}</Text>,
 			upvotes: generateCounterComponent("heart", "upvotes-counter", post.upvotesCount),
 			comments: generateCounterComponent("comment", "comments-counter", post.commentsCount),
 			// crossposts: generateCounterComponent("shuffle", "crossposts-counter", post.crosspostsCount),
+			media: this.getMedia(post)
 		};
-
-		const media = this.getMedia(post);
-		if (media) {
-			elements.media = (
-				<View nativeID="post-media-container" style={[Styles.container, styles.image]}>
-					{media}
-				</View>
-			);
-		}
 
 		if (post.body) {
 			const html = decodeString(post.body).replace(/<\!--.*?-->/g, "");
@@ -138,7 +133,9 @@ export default class Post extends Component {
 				</View>
 				{elements.title}
 				{elements.body}
-				{elements.media}
+				<View nativeID="post-media-container" style={[styles.image, styles.postMediaContainer]}>
+					{elements.media}
+				</View>
 				<View nativeID="post-footer-container" style={styles.postFooter}>
 					{elements.upvotes}
 					{elements.comments}
@@ -164,13 +161,14 @@ const styles = StyleSheet.create({
 	image: {
 		width: "100%",
 		maxHeight: "100%",
-		resizeMode: "contain"
 	},
 	post: {
 		alignItems: "flex-start",
+		justifyContent: "flex-start",
 		gap: 10,
 		padding: 10,
-		maxHeight: Dimensions.get("window").height * 0.8
+		maxHeight: Dimensions.get("window").height * 0.8,
+		overflow: "hidden"
 	},
 	postHeader: {
 		alignItems: "center",
@@ -184,6 +182,11 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 	},
+	postSubredditIcon: {
+		width: 20,
+		height: 20,
+		borderRadius: 10
+	},
 	postBody: {
 		maxHeight: 100,
 		maxWidth: "100%",
@@ -191,6 +194,24 @@ const styles = StyleSheet.create({
 		overflow: "hidden",
 		alignItems: "flex-start",
 		justifyContent: "flex-start",
+	},
+	postMediaContainer: {
+		// maxWidth: "100%",
+		// maxHeight: "100%",
+		flexShrink: 1,
+		alignItems: "flex-start",
+		justifyContent: "flex-start",
+		resizeMode: "contain",
+		objectFit: "contain"
+	},
+	postMedia: {
+		maxWidth: "100%",
+		maxHeight: "100%",
+		resizeMode: "contain",
+		objectFit: "contain",
+		// flexGrow: 1,
+		flexShrink: 1,
+	// 	backgroundColor: "red",
 	},
 	postFooter: {
 		flexDirection: "row",

@@ -13,9 +13,10 @@ export default class HeaderLeft extends Component {
 		return (
 			<StyledPressable onPress={this.logoPress} style={[Styles.headerSection, { marginLeft: 10 }]}>
 				<Logo/>
-				<Text style={[Styles.text, Styles.heading, {
-					fontSize: 20
-				}]}>Nexilis</Text>
+				<Text
+					style={[Styles.text, Styles.heading, { fontSize: 20 }]}
+					selectable={false}
+				>Nexilis</Text>
 			</StyledPressable>
 		);
 	}
