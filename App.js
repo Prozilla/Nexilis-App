@@ -12,6 +12,7 @@ import HeaderRight from "./src/components/header/HeaderRight.js";
 import * as Font from 'expo-font';
 import PostScreen from "./src/screens/Post.js";
 import HeaderLeft from "./src/components/header/HeaderLeft.js";
+import MenuScreen from "./src/screens/Menu.js";
 
 const Stack = createNativeStackNavigator();
 library.add(faMagnifyingGlass, faBars, faHeart, faComment, faShuffle, faArrowLeft);
@@ -55,14 +56,15 @@ export default class App extends Component {
 							headerTintColor: Colors.text.primary,
 							headerShadowVisible: true,
 							headerLeft: (props) => <HeaderLeft {...props} navigation={navigation}/>,
-							headerTitle: (props) => <HeaderTitle {...props}/>,
-							headerRight: (props) => <HeaderRight {...props}/>,
+							headerTitle: (props) => <HeaderTitle {...props} navigation={navigation}/>,
+							headerRight: (props) => <HeaderRight {...props} navigation={navigation}/>,
 							fullScreenGestureEnabled: true,
 							animationDuration: 250
 						})}
 					>
 						<Stack.Screen name="Home" component={HomeScreen}/>
 						<Stack.Screen name="Post" component={PostScreen}/>
+						<Stack.Screen name="Menu" component={MenuScreen}/>
 					</Stack.Navigator>
 				</NavigationContainer>
 				<StatusBar/>

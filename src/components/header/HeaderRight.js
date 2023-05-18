@@ -10,7 +10,8 @@ export default class HeaderRight extends Component {
 		console.log("Opened search bar");
 	}
 
-	openMenu() {
+	openMenu = () => {
+		this.props.navigation.navigate("Menu");
 		console.log("Opened menu");
 	}
 
