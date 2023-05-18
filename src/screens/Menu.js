@@ -2,8 +2,9 @@ import * as React from "react";
 import { Button, Platform, View } from "react-native";
 import Styles from "../constants/Styles";
 import * as WebBrowser from "expo-web-browser";
-import { makeRedirectUri, ResponseType, useAuthRequest } from "expo-auth-session";
+import { AccessTokenRequest, exchangeCodeAsync, makeRedirectUri, ResponseType, useAuthRequest } from "expo-auth-session";
 import { user } from "..";
+import fetchProxied from "../utils/proxy";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -18,6 +19,27 @@ const clientIds = {
 	"nexilis://redirect": "kXGu9uyC8hl9PIsff9Zqfg"
 };
 
+async function fetchAccessToken(code, clientId, redirectUri) {
+	await fetchProxied(discovery.tokenEndpoint + "?duration=permanent", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/x-www-form-urlencoded",
+			"Authorization": `Basic ${btoa(clientId + ":")}`
+		},
+		body: {
+			grant_type: "authorization_code",
+			code,
+			redirect_uri: redirectUri,
+		},
+		type: "form"
+	}).then(response => response?.json()).then((response) => {
+		if (response?.access_token) {
+			user.setAccessToken(response.access_token);
+			user.setRefreshToken(response.refresh_token);
+		}
+	}).catch(console.error);
+}
+
 export default function MenuScreen() {
 	const redirectUri = makeRedirectUri({
 		scheme: "nexilis://redirect",
@@ -27,44 +49,26 @@ export default function MenuScreen() {
 
 	const [request, response, promptAsync] = useAuthRequest(
 		{
-			responseType: ResponseType.Token, // This should be changed to ResponseType.Code
+			responseType: ResponseType.Code,
 			clientId,
 			redirectUri,
 			scopes: ["identity", "edit", "subscribe", "save", "submit", "read", "account", "vote", "mysubreddits"],
 			extraParams: {
-				// duration: "permanent"
-			}
+				duration: "permanent"
+			},
 		},
 		discovery
-	  );
-	
-	React.useEffect(() => {
-		console.log(response);
+	);
 
+	React.useEffect(() => {
 		if (response?.type === "success") {
 			const { code, access_token } = response.params;
 
 			if (access_token) {
 				user.setAccessToken(access_token);
-				user.fetchIdentity();
+			} else if (code) {
+				fetchAccessToken(code, clientId, redirectUri);
 			}
-
-			// This needs to happen on the server
-			// fetch(discovery.tokenEndpoint, {
-			// 	method: "POST",
-			// 	mode: "cors",
-			// 	headers: {
-			// 		"Accept": "application/json",
-			// 		"Content-Type": "application/json",
-			// 	},
-			// 	body: JSON.stringify({
-			// 		grant_type: "authorization_code",
-			// 		code,
-			// 		redirectUri,
-			// 	})
-			// }).then(response => response.json()).then((response) => {
-			// 	console.log(response);
-			// }).catch(console.error);
 		}
 	}, [response]);
 

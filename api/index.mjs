@@ -1,10 +1,11 @@
 import express from "express";
 import cors from "cors";
-import fetch from "node-fetch";
+import fetch, { FormData } from "node-fetch";
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true })); 
 
 const port = process.env.PORT || 3000;
 
@@ -13,7 +14,7 @@ app.get("/", (request, response) => {
 });
 
 app.post("/api/fetch", async (request, response) => {
-	const { url, method, body, headers } = request.body;
+	const { url, method, body, headers, type } = request.body;
 
 	if (url) {
 		const options = {
@@ -23,18 +24,31 @@ app.post("/api/fetch", async (request, response) => {
 		if (method)
 			options.method = method;
 
-		if (body) {
-			options.headers["Content-Type"] = "application/json";
-			options.body = JSON.stringify(body);
-		}
-
 		if (headers) {
 			for (const [key, value] of Object.entries(headers)) {
 				options.headers[key] = value;
 			}
 		}
 
+		if (body) {
+			switch (type) {
+				case "form":
+					options.headers["Content-Type"] = "application/x-www-form-urlencoded";
+					const form = new FormData();
+					for (const [key, value] of Object.entries(body)) {
+						form.set(key, value);
+					}
+					options.body = new URLSearchParams(form).toString();
+					break;
+				default:
+					options.headers["Content-Type"] = "application/json";
+					options.body = JSON.stringify(body);
+					break;
+			}
+		}
+
 		await fetch(url, options).then((result) => result.json()).then((result) => {
+			console.log(url, options, result);
 			response.status(200).json(result);
 		}).catch(console.error);
 	} else {

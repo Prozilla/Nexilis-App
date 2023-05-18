@@ -28,6 +28,6 @@
 		"web": {
 			"favicon": "./assets/favicon.png"
 		},
-		"scheme": "nexilis://redirect"
+		"scheme": "nexilis"
 	}
 }

@@ -6,6 +6,7 @@
  */
 
 import fetchProxied from "./utils/proxy";
+import { getData, storeData } from "./utils/storage";
 
 const SORT_TYPES = [
 	"best",
@@ -50,20 +51,46 @@ class Feed {
 
 class User {
 	#accessToken = null;
+	#refreshToken = null;
+
+	constructor() {
+		this.loadData();
+	}
 
 	setAccessToken(accessToken) {
 		this.#accessToken = accessToken;
+		this.saveData();
+	}
+
+	setRefreshToken(refreshToken) {
+		this.#refreshToken = refreshToken;
+		this.saveData();
+	}
+
+	saveData() {
+		if (this.#accessToken)
+			storeData("access-token", this.#accessToken);
+
+		if (this.#refreshToken)
+			storeData("refresh-token", this.#refreshToken);
+	}
+
+	async loadData() {
+		this.#accessToken = await getData("access-token");
+		this.#refreshToken = await getData("refresh-token");
+		this.fetchIdentity().then(console.log);
 	}
 
 	async fetchIdentity() {
+		if (!this.#accessToken)
+			return null;
+
 		const url = `https://oauth.reddit.com/api/v1/me`;
 		return await fetchProxied(url, {
 			headers: {
 				"Authorization": `bearer ${this.#accessToken}`
 			}
-		}).then((response) => response.json()).then((response) => {
-			console.log(response);
-		});
+		}).then((response) => response.json());
 	}
 }
 

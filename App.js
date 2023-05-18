@@ -52,7 +52,7 @@ export default class App extends Component {
 
 	componentDidMount() {
 		this.loadFontsAsync();
-		this.checkServer();
+		// this.checkServer();
 	}
 	
 	render() {
