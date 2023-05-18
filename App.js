@@ -6,7 +6,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import Colors from "./src/constants/Colors.js";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faArrowLeft, faBars, faComment, faHeart, faMagnifyingGlass, faShuffle } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faBars, faComment, faGear, faHeart, faHouse, faMagnifyingGlass, faShuffle, faUser } from "@fortawesome/free-solid-svg-icons";
 import HeaderTitle from "./src/components/header/HeaderTitle.js";
 import HeaderRight from "./src/components/header/HeaderRight.js";
 import * as Font from 'expo-font';
@@ -15,7 +15,7 @@ import HeaderLeft from "./src/components/header/HeaderLeft.js";
 import MenuScreen from "./src/screens/Menu.js";
 
 const Stack = createNativeStackNavigator();
-library.add(faMagnifyingGlass, faBars, faHeart, faComment, faShuffle, faArrowLeft);
+library.add(faMagnifyingGlass, faHeart, faComment, faShuffle, faArrowLeft, faUser, faHouse, faGear);
 
 let fonts = {
 	"Roboto-Regular": require("./assets/fonts/Roboto/Roboto-Regular.ttf"),
@@ -78,7 +78,7 @@ export default class App extends Component {
 							headerTitle: (props) => <HeaderTitle {...props} navigation={navigation}/>,
 							headerRight: (props) => <HeaderRight {...props} navigation={navigation}/>,
 							fullScreenGestureEnabled: true,
-							animationDuration: 250
+							animationDuration: 250,
 						})}
 					>
 						<Stack.Screen name="Home" component={HomeScreen}/>

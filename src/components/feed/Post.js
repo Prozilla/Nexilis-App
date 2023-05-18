@@ -2,11 +2,12 @@ import { PureComponent } from "react";
 import Styles from "../../constants/Styles";
 import { Dimensions, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import RenderHTML from "react-native-render-html";
-import { decodeString, fetchComments } from "../..";
+import { fetchComments } from "../..";
 import Colors from "../../constants/Colors";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import Comment from "./Comment";
 import { Audio, Video, ResizeMode } from "expo-av";
+import { decodeString } from "../../utils/utils";
 
 const DISPLAY_MDOE = {
 	PREVIEW: 0,

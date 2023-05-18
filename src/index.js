@@ -7,6 +7,7 @@
 
 import fetchProxied from "./utils/proxy";
 import { getData, storeData } from "./utils/storage";
+import { formatNumber, removeUrlQueries } from "./utils/utils";
 
 const SORT_TYPES = [
 	"best",
@@ -163,23 +164,7 @@ export async function fetchComments(postId) {
 	return comments;
 }
 
-export function decodeString(string) {
-	return string.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
-}
 
-export function removeUrlQueries(url) {
-	return url.split("?")[0];
-}
-
-function formatNumber(value) {
-	if (value > 999999) {
-		return Math.sign(value) * ((Math.abs(value) / 1000000).toFixed(1)) + "m";
-	} else if (value > 999) {
-		return Math.sign(value) * ((Math.abs(value) / 1000).toFixed(1)) + "k";
-	} else {
-		return value;
-	}
-}
 
 function formatRelativeTime(unixDate) {
 	const date = Math.abs((new Date(unixDate * 1000).getTime() / 1000).toFixed(0));
