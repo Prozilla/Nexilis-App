@@ -32,8 +32,27 @@ export default class App extends Component {
 		this.setState({ fontsLoaded: true });
 	}
 
+	async checkServer() {
+		console.log(await fetch("http://localhost:3000/api/fetch", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				url: "https://www.reddit.com/api/v1/access_token",
+				method: "POST",
+				body: {
+					grant_type: "authorization_code",
+					code: "code",
+					redirectUri: "redirectUri",
+				}
+			})
+		}).then((response) => response.text()))
+	}
+
 	componentDidMount() {
 		this.loadFontsAsync();
+		this.checkServer();
 	}
 	
 	render() {

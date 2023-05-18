@@ -5,6 +5,8 @@
  * Made by Prozilla
  */
 
+import fetchProxied from "./utils/proxy";
+
 const SORT_TYPES = [
 	"best",
 	"hot",
@@ -45,21 +47,42 @@ class Feed {
 	}
 }
 
-const currentFeed = new Feed();
+
+class User {
+	#accessToken = null;
+
+	setAccessToken(accessToken) {
+		this.#accessToken = accessToken;
+	}
+
+	async fetchIdentity() {
+		const url = `https://oauth.reddit.com/api/v1/me`;
+		return await fetchProxied(url, {
+			headers: {
+				"Authorization": `bearer ${this.#accessToken}`
+			}
+		}).then((response) => response.json()).then((response) => {
+			console.log(response);
+		});
+	}
+}
+
+export const feed = new Feed();
+export const user = new User();
 
 export async function refreshFeed() {
-	currentFeed.lastPostId = null;
+	feed.lastPostId = null;
 	return await fetchPosts().catch((error) => {
 		console.error(error);
 	});
 }
 
 export async function fetchPosts() {
-	const { subreddits, sort, allowNsfw } = currentFeed;
+	const { subreddits, sort, allowNsfw } = feed;
 	let url = `https://www.reddit.com/r/${subreddits.join("+")}/${sort}.json?limit=${POSTS_PER_FETCH}`;
 
-	if (currentFeed.lastPostId)
-		url += `&after=t3_${currentFeed.lastPostId}`;
+	if (feed.lastPostId)
+		url += `&after=t3_${feed.lastPostId}`;
 
 	let posts = await fetch(url).then((result) => {
 		return result.json();
@@ -70,7 +93,7 @@ export async function fetchPosts() {
 	});
 
 	posts = await Promise.all(posts.map(async (post) => {
-		currentFeed.lastPostId = post.id;
+		feed.lastPostId = post.id;
 
 		// Extract data from post
 		return {

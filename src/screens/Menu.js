@@ -3,6 +3,7 @@ import { Button, Platform, View } from "react-native";
 import Styles from "../constants/Styles";
 import * as WebBrowser from "expo-web-browser";
 import { makeRedirectUri, ResponseType, useAuthRequest } from "expo-auth-session";
+import { user } from "..";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -24,45 +25,46 @@ export default function MenuScreen() {
 
 	const clientId = clientIds[redirectUri] ?? clientIds["nexilis://redirect"];
 
-	console.log(clientId, redirectUri);
-
 	const [request, response, promptAsync] = useAuthRequest(
 		{
-			responseType: "code",
+			responseType: ResponseType.Token, // This should be changed to ResponseType.Code
 			clientId,
 			redirectUri,
-			clientSecret: "",
 			scopes: ["identity", "edit", "subscribe", "save", "submit", "read", "account", "vote", "mysubreddits"],
 			extraParams: {
-				"duration": "permanent"
+				// duration: "permanent"
 			}
 		},
 		discovery
-	);
+	  );
 	
 	React.useEffect(() => {
 		console.log(response);
 
 		if (response?.type === "success") {
-			const { code } = response.params;
-			fetch(discovery.tokenEndpoint, {
-				method: "POST",
-				mode: "cors",
-				headers: {
-					"Accept": "application/json",
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					grant_type: "authorization_code",
-					code,
-					redirectUri,
-				})
-			}).then(response => response.json()).then((response) => {
-				console.log(response);
-			}).catch(console.error);
+			const { code, access_token } = response.params;
 
+			if (access_token) {
+				user.setAccessToken(access_token);
+				user.fetchIdentity();
+			}
 
-			// Do something with code
+			// This needs to happen on the server
+			// fetch(discovery.tokenEndpoint, {
+			// 	method: "POST",
+			// 	mode: "cors",
+			// 	headers: {
+			// 		"Accept": "application/json",
+			// 		"Content-Type": "application/json",
+			// 	},
+			// 	body: JSON.stringify({
+			// 		grant_type: "authorization_code",
+			// 		code,
+			// 		redirectUri,
+			// 	})
+			// }).then(response => response.json()).then((response) => {
+			// 	console.log(response);
+			// }).catch(console.error);
 		}
 	}, [response]);
 
