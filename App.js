@@ -16,6 +16,7 @@ import { user } from "./src/index.js";
 import AccountScreen from "./src/screens/Account.js";
 import Routes from "./src/constants/Routes.js";
 import * as SplashScreen from 'expo-splash-screen';
+import { Platform } from "react-native";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -34,7 +35,6 @@ export default function App() {
 	useEffect(() => {
 		// Load fonts
 		Font.loadAsync(fonts).then(() => {
-			console.log("Fonts loaded");
 			setIsReady(true);
 		});
 
@@ -52,8 +52,13 @@ export default function App() {
 	if (!isReady)
 		return null;
 
+	const safeAreaStyle = {};
+
+	if (Platform.OS == "ios")
+		safeAreaStyle.paddingBottom = 25;
+
 	return (
-		<SafeAreaProvider onLayout={onLayoutRootView}>
+		<SafeAreaProvider onLayout={onLayoutRootView} style={safeAreaStyle}>
 			<NavigationContainer>
 				<Stack.Navigator
 					initialRouteName={Routes.HOME}
