@@ -4,12 +4,12 @@ import { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import StyledPressable from "../styled/StyledTouchableOpacity";
 import Colors from "../../constants/Colors";
-import { user } from "../..";
 import { removeUrlQueries } from "../../utils/utils";
+import Routes from "../../constants/Routes";
 
 export default class HeaderRight extends Component {
 	openMenu = () => {
-		this.props.navigation.navigate("Menu");
+		this.props.navigation.navigate(Routes.ACCOUNT);
 	}
 
 	render() {

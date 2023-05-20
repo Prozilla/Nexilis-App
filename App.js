@@ -12,8 +12,9 @@ import HeaderRight from "./src/components/header/HeaderRight.js";
 import * as Font from 'expo-font';
 import PostScreen from "./src/screens/Post.js";
 import HeaderLeft from "./src/components/header/HeaderLeft.js";
-import MenuScreen from "./src/screens/Menu.js";
 import { user } from "./src/index.js";
+import AccountScreen from "./src/screens/Account.js";
+import Routes from "./src/constants/Routes.js";
 
 const Stack = createNativeStackNavigator();
 library.add(faMagnifyingGlass, faHeart, faComment, faShuffle, faArrowLeft, faUser, faHouse, faGear);
@@ -70,7 +71,7 @@ export default class App extends Component {
 			<SafeAreaProvider>
 				<NavigationContainer>
 					<Stack.Navigator
-						initialRouteName="Home"
+						initialRouteName={Routes.HOME}
 						screenOptions={({ navigation }) => ({
 							headerTitleAlign: "left",
 							headerStyle: {
@@ -88,9 +89,9 @@ export default class App extends Component {
 							animationDuration: 250,
 						})}
 					>
-						<Stack.Screen name="Home" component={HomeScreen}/>
-						<Stack.Screen name="Post" component={PostScreen}/>
-						<Stack.Screen name="Menu" component={MenuScreen}/>
+						<Stack.Screen name={Routes.HOME} component={HomeScreen}/>
+						<Stack.Screen name={Routes.POST} component={PostScreen}/>
+						<Stack.Screen name={Routes.ACCOUNT} component={AccountScreen}/>
 					</Stack.Navigator>
 				</NavigationContainer>
 				<StatusBar/>

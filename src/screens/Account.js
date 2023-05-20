@@ -1,8 +1,8 @@
 import * as React from "react";
-import { Button, Platform, View } from "react-native";
+import { Button, View } from "react-native";
 import Styles from "../constants/Styles";
 import * as WebBrowser from "expo-web-browser";
-import { AccessTokenRequest, exchangeCodeAsync, makeRedirectUri, ResponseType, useAuthRequest } from "expo-auth-session";
+import {  makeRedirectUri, ResponseType, useAuthRequest } from "expo-auth-session";
 import { user } from "..";
 import fetchProxied from "../utils/proxy";
 import { encodeBase64 } from "../utils/utils";
@@ -43,7 +43,7 @@ async function fetchAccessToken(code, clientId, redirectUri) {
 	}).catch(console.error);
 }
 
-export default function MenuScreen() {
+export default function AccountScreen() {
 	const redirectUri = makeRedirectUri({
 		scheme: "nexilis://redirect",
 	});

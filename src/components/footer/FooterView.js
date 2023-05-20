@@ -1,43 +1,48 @@
 import { View } from "react-native";
 import Styles from "../../constants/Styles";
-import { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import StyledPressable from "../styled/StyledTouchableOpacity";
 import Colors from "../../constants/Colors";
+import Routes from "../../constants/Routes";
+import { getCurrentRoute } from "../../utils/navigtion";
 
-export default class FooterView extends Component {
-	navigate = (route) => {
-		this.props.navigation.navigate(route);
-	}
+export default function FooterView(props) {
+	const route = getCurrentRoute();
 
-	openHome = () => {
-		this.navigate("Home");
-	}
-
-	render() {
-		return (
-			<View style={[Styles.container]}>
-				{this.props.children}
-				<View style={[{
-					flexDirection: "row",
-					alignItems: "center",
-					justifyContent: "space-evenly",
-					height: 50,
-					width: "100%",
-					borderTopColor: Colors.background.tertiary,
-					borderTopWidth: 2
-				}]}>
-					<StyledPressable onPress={this.openHome}>
-						<FontAwesomeIcon icon="house" color={Colors.text.primary} size={24}/>
-					</StyledPressable>
-					<StyledPressable onPress={() => null}>
-						<FontAwesomeIcon icon="magnifying-glass" color={Colors.text.primary} size={24}/>
-					</StyledPressable>
-					<StyledPressable onPress={() => null}>
-						<FontAwesomeIcon icon="gear" color={Colors.text.primary} size={24}/>
-					</StyledPressable>
-				</View>
+	return (
+		<View style={[Styles.container]}>
+			{props.children}
+			<View style={[{
+				flexDirection: "row",
+				alignItems: "center",
+				justifyContent: "space-evenly",
+				height: 50,
+				width: "100%",
+				borderTopColor: Colors.background.tertiary,
+				borderTopWidth: 2
+			}]}>
+				<StyledPressable onPress={() => props.navigation.navigate(Routes.HOME)}>
+					<FontAwesomeIcon
+						icon="house"
+						color={route == Routes.HOME ? Colors.text.primary : Colors.text.secondary}
+						size={24}
+					/>
+				</StyledPressable>
+				<StyledPressable onPress={() => null}>
+					<FontAwesomeIcon
+						icon="magnifying-glass"
+						color={route == Routes.SEARCH ? Colors.text.primary : Colors.text.secondary}
+						size={24}
+					/>
+				</StyledPressable>
+				<StyledPressable onPress={() => null}>
+					<FontAwesomeIcon
+						icon="gear"
+						color={route == Routes.SETTINGS ? Colors.text.primary : Colors.text.secondary}
+						size={24}
+					/>
+				</StyledPressable>
 			</View>
-		);
-	}
+		</View>
+	);
 }
