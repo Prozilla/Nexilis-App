@@ -1,9 +1,9 @@
 import { Component } from "react";
 import { Dimensions, FlatList, View } from "react-native";
-import { fetchPosts, refreshFeed } from "../..";
 import Styles from "../../constants/Styles";
 import Post from "./Post";
 import Colors from "../../constants/Colors";
+import { feed } from "../..";
 
 export default class Feed extends Component {
 	state = {
@@ -14,7 +14,7 @@ export default class Feed extends Component {
 
 	loadFeed() {
 		this.setState({ loading: true });
-		fetchPosts().then((posts) => {
+		feed.fetchPosts().then((posts) => {
 			console.log("Loaded feed");
 			this.setState({ posts, loading: false });
 		}).catch((error) => {
@@ -28,7 +28,7 @@ export default class Feed extends Component {
 
 	extendFeed = async () => {
 		this.setState({ loading: true });
-		fetchPosts().then((newPosts) => {
+		feed.fetchPosts().then((newPosts) => {
 			console.log("Extended feed");
 			const posts = this.state.posts.concat(newPosts);
 			this.setState({ posts, loading: false });
@@ -39,7 +39,7 @@ export default class Feed extends Component {
 
 	refreshFeed = () => {
 		this.setState({ loading: true, refreshing: true });
-		refreshFeed().then((posts) => {
+		feed.refreshFeed().then((posts) => {
 			console.log("Refreshed feed");
 			this.setState({ posts, loading: false, refreshing: false });
 		}).catch((error) => {

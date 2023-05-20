@@ -13,6 +13,7 @@ import * as Font from 'expo-font';
 import PostScreen from "./src/screens/Post.js";
 import HeaderLeft from "./src/components/header/HeaderLeft.js";
 import MenuScreen from "./src/screens/Menu.js";
+import { user } from "./src/index.js";
 
 const Stack = createNativeStackNavigator();
 library.add(faMagnifyingGlass, faHeart, faComment, faShuffle, faArrowLeft, faUser, faHouse, faGear);
@@ -25,6 +26,7 @@ let fonts = {
 export default class App extends Component {
 	state = {
 		fontsLoaded: false,
+		userData: null
 	};
 		
 	async loadFontsAsync() {
@@ -50,8 +52,13 @@ export default class App extends Component {
 		}).then((response) => response.text()))
 	}
 
+	async loadUserData() {
+		this.setState({ userData: await user.fetchIdentity() });
+	}
+
 	componentDidMount() {
 		this.loadFontsAsync();
+		this.loadUserData();
 		// this.checkServer();
 	}
 	
@@ -76,7 +83,7 @@ export default class App extends Component {
 							headerShadowVisible: true,
 							headerLeft: (props) => <HeaderLeft {...props} navigation={navigation}/>,
 							headerTitle: (props) => <HeaderTitle {...props} navigation={navigation}/>,
-							headerRight: (props) => <HeaderRight {...props} navigation={navigation}/>,
+							headerRight: (props) => <HeaderRight {...props} navigation={navigation} userData={this.state.userData}/>,
 							fullScreenGestureEnabled: true,
 							animationDuration: 250,
 						})}
