@@ -2,7 +2,7 @@ import * as React from "react";
 import Styles from "../../constants/Styles";
 import { TextInput } from "react-native";
 
-export default function SearchBar(props) {
+export default function SearchBar() {
 	const [text, onChangeText] = React.useState("");
 
 	return (
