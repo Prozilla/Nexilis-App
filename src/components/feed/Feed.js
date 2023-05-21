@@ -2,8 +2,8 @@ import { Component } from "react";
 import { Dimensions, FlatList, View } from "react-native";
 import Styles from "../../constants/Styles";
 import Post from "./Post";
-import Colors from "../../constants/Colors";
 import { feed } from "../../features/reddit";
+import Divider from "../misc/Divider";
 
 export default class Feed extends Component {
 	state = {
@@ -55,13 +55,7 @@ export default class Feed extends Component {
 		return (
 			<View>
 				<Post data={post} navigation={this.props.navigation} preview={true}/>
-				<View
-					style={{
-						width: "100%",
-						height: 2,
-						backgroundColor: Colors.background.tertiary
-					}}
-				/>
+				<Divider/>
 			</View>
 		);
 	}

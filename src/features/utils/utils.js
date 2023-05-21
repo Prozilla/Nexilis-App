@@ -22,7 +22,7 @@ export function formatNumber(value) {
 	}
 }
 
-export function formatRelativeTime(unixDate) {
+export function formatRelativeTime(unixDate, options = { suffix: true }) {
 	const date = Math.abs((new Date(unixDate * 1000).getTime() / 1000).toFixed(0));
 	const currentDate = Math.abs((new Date().getTime() / 1000).toFixed(0));
 
@@ -47,5 +47,10 @@ export function formatRelativeTime(unixDate) {
 		time = seconds > 1 ? seconds + " seconds" : seconds + " second";
 	}
 
-	return time + " ago";
+	let result = time;
+
+	if (options.suffix)
+		result += " ago";
+
+	return result;
 }

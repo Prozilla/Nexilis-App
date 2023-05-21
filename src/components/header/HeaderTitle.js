@@ -1,6 +1,5 @@
 import { Text } from "react-native";
 import Styles from "../../constants/Styles";
-import { Component } from "react";
 import Logo from "./Logo";
 import StyledPressable from "../styled/StyledTouchableOpacity";
 

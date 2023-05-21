@@ -29,10 +29,16 @@ export async function fetchAccessToken(code, clientId, redirectUri) {
 			redirect_uri: redirectUri,
 		},
 		type: "form"
-	}).then(response => response?.json()).then((response) => {
+	}).then(response => response?.json()).then(async (response) => {
 		if (response?.access_token) {
-			user.setAccessToken(response.access_token);
+			await user.setAccessToken(response.access_token);
 			user.setRefreshToken(response.refresh_token);
 		}
 	}).catch(console.error);
+}
+
+// TO DO: actually revoke access token instead of removing it from storage
+export async function revokeAccessToken() {
+	user.setAccessToken(null);
+	user.setRefreshToken(null);
 }

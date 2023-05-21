@@ -5,16 +5,20 @@ import StyledPressable from "../styled/StyledTouchableOpacity";
 import Colors from "../../constants/Colors";
 import Routes from "../../constants/Routes";
 import { removeUrlQueries } from "../../features/utils/utils";
+import { useContext } from "react";
+import { UserDataContext } from "../../hooks/contexts";
 
 export default function HeaderRight(props) {
+	const [userData] = useContext(UserDataContext);
+
 	return (
 		<View style={[Styles.headerSection, { gap: 15, marginRight: 10 }]}>
 			<StyledPressable onPress={() => props.navigation.navigate(Routes.ACCOUNT)}>
 				{
-					props.userData?.icon_img
+					userData?.icon_img
 					?	<Image
 							resizeMode="contain"
-							source={{ uri: removeUrlQueries(props.userData.icon_img) }}
+							source={{ uri: removeUrlQueries(userData.icon_img) }}
 							style={{
 								width: 32,
 								height: 32,

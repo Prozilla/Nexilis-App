@@ -54,4 +54,16 @@ export default StyleSheet.create({
 		borderStyle: null,
 		justifyContent: "flex-start"
 	},
+	button: {
+		color: Colors.background.primary,
+		backgroundColor: Colors.accentColor.primary,
+		borderRadius: 0,
+		paddingHorizontal: 25,
+		paddingVertical: 10
+	},
+	buttonText: {
+		color: Colors.background.primary,
+		fontFamily: "Roboto-Bold",
+		textAlign: "center"
+	},
 });

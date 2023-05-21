@@ -1,4 +1,3 @@
-import { Component } from "react";
 import { View } from "react-native";
 import Styles from "../constants/Styles";
 import Post from "../components/feed/Post";

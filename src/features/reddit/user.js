@@ -12,27 +12,32 @@ export default class User {
 		});
 	}
 
-	setAccessToken(accessToken) {
+	// TO DO: convert to set function
+	async setAccessToken(accessToken) {
 		if (accessToken == this.#accessToken)
 			return;
 
 		this.#accessToken = accessToken;
-		this.saveTokens();
+		this.storeAccessToken();
 
-		this.updateIdentity();
+		await this.updateIdentity();
+	}
+
+	get accessToken() {
+		return this.#accessToken;
+	}
+
+	storeAccessToken() {
+		storeData("access-token", this.#accessToken);
 	}
 
 	setRefreshToken(refreshToken) {
 		this.#refreshToken = refreshToken;
-		this.saveTokens();
+		this.storeRefreshToken();
 	}
 
-	saveTokens() {
-		if (this.#accessToken)
-			storeData("access-token", this.#accessToken);
-
-		if (this.#refreshToken)
-			storeData("refresh-token", this.#refreshToken);
+	storeRefreshToken() {
+		storeData("refresh-token", this.#refreshToken);
 	}
 
 	async loadTokens() {
@@ -54,7 +59,8 @@ export default class User {
 
 	async updateIdentity() {
 		this.identity = await this.fetchIdentity();
-		console.log(this.identity);
+		// console.log("Updated user identity");
+		return this.identity;
 	}
 
 	getIdentity() {

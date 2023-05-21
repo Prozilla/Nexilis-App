@@ -1,4 +1,3 @@
-import { Component } from "react";
 import Styles from "../constants/Styles";
 import Feed from "../components/feed/Feed";
 import FooterView from "../components/footer/FooterView";
