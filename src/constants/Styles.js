@@ -13,7 +13,8 @@ export default StyleSheet.create({
 	text: {
 		color: Colors.text.primary,
 		fontFamily: "Roboto-Regular",
-		textAlign: "left"
+		textAlign: "left",
+		fontSize: 14,
 	},
 	heading: {
 		fontSize: 24,
@@ -37,13 +38,13 @@ export default StyleSheet.create({
 	},
 	input: {
 		color: Colors.text.primary,
-		placeholderTextColor: Colors.text.tertiary,
 		backgroundColor: Colors.background.primary,
 		height: 40,
 		margin: 12,
 		padding: 15,
 		borderColor: null,
-		borderRadius: BORDER_RADIUS
+		borderRadius: BORDER_RADIUS,
+		fontSize: 16,
 	},
 	headerSection: {
 		color: Colors.text.primary,

@@ -3,7 +3,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useCallback, useEffect, useState } from "react";
 import HomeScreen from "./src/screens/Home.js";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import Colors from "./src/constants/Colors.js";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faArrowLeft, faComment, faGear, faHeart, faHouse, faMagnifyingGlass, faShuffle, faUser } from "@fortawesome/free-solid-svg-icons";
@@ -46,15 +46,13 @@ export default function App() {
 	if (Platform.OS == "ios")
 		safeAreaStyle.paddingBottom = 25;
 
-	const initialRoute = (__DEV__ && devMode.initialRouteOverride) ? devMode.initialRouteOverride : Routes.HOME;
-
 	return (
 		<UserDataContext.Provider value={[userData, setUserData]}>
 			<SafeAreaProvider onLayout={onLayoutRootView} style={safeAreaStyle}>
 				<NavigationContainer>
 					<Stack.Navigator
-						initialRouteName={initialRoute}
-						screenOptions={({ navigation }) => ({
+						initialRouteName={Routes.HOME}
+						screenOptions={() => ({
 							headerTitleAlign: "left",
 							headerStyle: {
 								backgroundColor: Colors.background.primary,
@@ -74,7 +72,7 @@ export default function App() {
 						<Stack.Screen name={Routes.HOME} component={HomeScreen}/>
 						<Stack.Screen name={Routes.POST} component={PostScreen}/>
 						<Stack.Screen name={Routes.ACCOUNT} component={AccountScreen}/>
-						<Stack.Screen name={Routes.SEARCH} component={SearchScreen}/>
+						<Stack.Screen name={Routes.SEARCH} component={SearchScreen} options={{ headerShown: false }}/>
 					</Stack.Navigator>
 				</NavigationContainer>
 				<StatusBar/>
