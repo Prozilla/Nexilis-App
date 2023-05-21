@@ -1,5 +1,6 @@
-import { Feed } from "./feed";
-import User from "./user";
+import { FeedManager } from "./managers/feed";
+import SearchManager from "./managers/search";
+import UserManager from "./managers/user";
 
 /**
  * Uses the Reddit API to fetch data from reddit.com
@@ -8,5 +9,6 @@ import User from "./user";
  * Made by Prozilla
  */
 
-export const feed = new Feed();
-export const user = new User();
+export const feed = new FeedManager();
+export const user = new UserManager();
+export const search = new SearchManager();

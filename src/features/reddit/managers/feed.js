@@ -1,4 +1,4 @@
-import { formatNumber, formatRelativeTime, removeUrlQueries } from "../utils/utils";
+import { extractPostData } from "../types/posts";
 
 const SORT_TYPES = [
 	"best",
@@ -16,9 +16,8 @@ const DEFAULTS = {
 };
 
 const POSTS_PER_FETCH = 4; // Should be 10
-const FALLBACK_SUBREDDIT_ICON = "https://www.iconpacks.net/icons/2/free-reddit-logo-icon-2436-thumb.png";
 
-export class Feed {
+export class FeedManager {
 	constructor(subreddits = DEFAULTS.subreddits, sort = DEFAULTS.sort, allowNsfw = DEFAULTS.allowNsfw) {
 		this.subreddits = subreddits;
 		this.sort = sort;
@@ -56,22 +55,7 @@ export class Feed {
 	
 		posts = await Promise.all(posts.map(async (post) => {
 			this.lastPostId = post.id;
-	
-			// Extract data from post
-			return {
-				title: post.title,
-				id: post.id,
-				body: post.selftext_html,
-				subreddit: post.subreddit,
-				upvotesCount: formatNumber(post.score),
-				commentsCount: formatNumber(post.num_comments),
-				crosspostsCount: formatNumber(post.num_crossposts),
-				nsfw: post.over_18,
-				subredditIcon: await fetchSubredditIcon(post.subreddit),
-				relativeTime: formatRelativeTime(post.created),
-				media: post.media,
-				preview: post.preview
-			}
+			return await extractPostData(post);
 		}).filter((post) => {
 			// Filter NSFW posts
 			return allowNsfw || !post.nsfw;
@@ -90,39 +74,4 @@ export class Feed {
 			console.error(error);
 		});
 	}
-}
-
-export async function fetchComments(postId) {
-	const url = `https://www.reddit.com/comments/${postId}/.json`;
-
-	const comments = await fetch(url).then((result) => {
-		return result.json();
-	}).catch((error) => {
-		console.error(error);
-	});
-
-	// console.log(comments);
-
-	return comments;
-}
-
-async function fetchSubredditIcon(subreddit) {
-	let source = FALLBACK_SUBREDDIT_ICON;
-
-	if (subreddit != "all") {
-		await fetch(`https://www.reddit.com/r/${subreddit}/about.json`).then((result) => {
-			return result.json();
-		}).then((result) => {
-			const newSource = result.data.icon_img ? result.data.icon_img : result.data.community_icon;
-
-			if (newSource)
-				source = removeUrlQueries(newSource);
-
-			return;
-		}).catch((error) => {
-			console.error(error);
-		});
-	}
-
-	return source;
 }

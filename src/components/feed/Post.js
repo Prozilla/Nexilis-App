@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import Comment from "./Comment";
 import { Audio, Video, ResizeMode } from "expo-av";
 import { decodeString } from "../../features/utils/utils";
-import { fetchComments } from "../../features/reddit/feed";
+import { fetchComments } from "../../features/reddit/types/comments";
 
 const DISPLAY_MDOE = {
 	PREVIEW: 0,

@@ -9,6 +9,7 @@ import Profile from "../components/account/Profile";
 import StyledButton from "../components/styled/StyledButton";
 import { useContext, useEffect } from "react";
 import { UserDataContext } from "../hooks/contexts";
+import FooterView from "../components/footer/FooterView";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -59,16 +60,18 @@ export default function AccountScreen() {
 	};
 
 	return (
-		<View style={[Styles.screen, Styles.container, { justifyContent: "flex-start" }]}>
-			<Profile/>
-			{
-				isLoggedIn
-				? <StyledButton title="Log out" onPress={logOut} style={{
-					position: "absolute",
-					bottom: 25
-				}}/>
-				: <StyledButton disabled={!request} title="Log in" onPress={logIn}/>
-			}
-		</View>
+		<FooterView style={Styles.screen}>
+			<View style={[Styles.container, { justifyContent: "flex-start", width: "100%" }]}>
+				<Profile style={Styles.container}/>
+				{
+					isLoggedIn
+					? <StyledButton title="Log out" onPress={logOut} style={{
+						position: "absolute",
+						bottom: 25
+					}}/>
+					: <StyledButton disabled={!request} title="Log in" onPress={logIn}/>
+				}
+			</View>
+		</FooterView>
 	);
 }

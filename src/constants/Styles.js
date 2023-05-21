@@ -6,7 +6,6 @@ const BORDER_RADIUS = 10;
 export default StyleSheet.create({
 	screen: {
 		flex: 1,
-		flexDirection: "column",
 		alignItems: "center",
 		justifyContent: "flex-start",
 		backgroundColor: Colors.background.primary

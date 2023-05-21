@@ -9,5 +9,5 @@ export const reddit = {
 };
 
 export const devMode = {
-	initialRouteOverride: null,
+	initialRouteOverride: Routes.SEARCH,
 }

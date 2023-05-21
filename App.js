@@ -19,6 +19,7 @@ import { user } from "./src/features/reddit/index.js";
 import { devMode } from "./config.js";
 import useLoadedAssets from "./src/hooks/loadedAssets.js";
 import { UserDataContext } from "./src/hooks/contexts.js";
+import SearchScreen from "./src/screens/Search.js";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -73,6 +74,7 @@ export default function App() {
 						<Stack.Screen name={Routes.HOME} component={HomeScreen}/>
 						<Stack.Screen name={Routes.POST} component={PostScreen}/>
 						<Stack.Screen name={Routes.ACCOUNT} component={AccountScreen}/>
+						<Stack.Screen name={Routes.SEARCH} component={SearchScreen}/>
 					</Stack.Navigator>
 				</NavigationContainer>
 				<StatusBar/>
