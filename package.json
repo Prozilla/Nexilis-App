@@ -1,6 +1,16 @@
 {
+  "displayName": "Nexilis",
   "name": "nexilis",
   "version": "1.0.0",
+  "author": {
+	"name": "Prozilla",
+	"email": "business@prozilla.dev",
+	"url": "https://prozilla.dev/"
+  },
+  "repository": {
+	"url": "https://github.com/Prozilla/Nexilis-App"
+  },
+  "license": "MIT",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
