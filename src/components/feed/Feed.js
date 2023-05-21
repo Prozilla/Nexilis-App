@@ -3,7 +3,7 @@ import { Dimensions, FlatList, View } from "react-native";
 import Styles from "../../constants/Styles";
 import Post from "./Post";
 import Colors from "../../constants/Colors";
-import { feed } from "../..";
+import { feed } from "../../features/reddit";
 
 export default class Feed extends Component {
 	state = {

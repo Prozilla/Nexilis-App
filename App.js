@@ -12,11 +12,11 @@ import HeaderRight from "./src/components/header/HeaderRight.js";
 import * as Font from 'expo-font';
 import PostScreen from "./src/screens/Post.js";
 import HeaderLeft from "./src/components/header/HeaderLeft.js";
-import { user } from "./src/index.js";
 import AccountScreen from "./src/screens/Account.js";
 import Routes from "./src/constants/Routes.js";
 import * as SplashScreen from 'expo-splash-screen';
 import { Platform } from "react-native";
+import { user } from "./src/features/reddit/index.js";
 
 SplashScreen.preventAutoHideAsync();
 

@@ -1,4 +1,4 @@
-import { formatNumber, formatRelativeTime, removeUrlQueries } from "./utils";
+import { formatNumber, formatRelativeTime, removeUrlQueries } from "../utils/utils";
 
 const SORT_TYPES = [
 	"best",

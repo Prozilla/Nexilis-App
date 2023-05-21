@@ -1,5 +1,5 @@
-import fetchProxied from "./proxy";
-import { getData, storeData } from "./storage";
+import fetchProxied from "../utils/proxy";
+import { getData, storeData } from "../native/storage";
 
 export default class User {
 	#accessToken = null;

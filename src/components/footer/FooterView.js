@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import StyledPressable from "../styled/StyledTouchableOpacity";
 import Colors from "../../constants/Colors";
 import Routes from "../../constants/Routes";
-import { getCurrentRoute } from "../../utils/navigtion";
+import { getCurrentRoute } from "../../features/native/navigtion";
 
 export default function FooterView(props) {
 	const route = getCurrentRoute();

@@ -4,4 +4,7 @@ export default {
 	POST: "Post",
 	SEARCH: "Search",
 	SETTINGS: "Settings",
+	CREATE: "Create",
+	CHAT: "Chat",
+	DISCOVER: "Discover"
 };

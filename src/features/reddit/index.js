@@ -5,8 +5,8 @@
  * Made by Prozilla
  */
 
-import { Feed } from "./utils/feed";
-import User from "./utils/user";
+import { Feed } from "./feed";
+import User from "./user";
 
 export const feed = new Feed();
 export const user = new User();

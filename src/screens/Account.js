@@ -2,10 +2,11 @@ import * as React from "react";
 import { Button, View } from "react-native";
 import Styles from "../constants/Styles";
 import * as WebBrowser from "expo-web-browser";
-import {  makeRedirectUri, ResponseType, useAuthRequest } from "expo-auth-session";
-import { user } from "..";
-import fetchProxied from "../utils/proxy";
-import { encodeBase64 } from "../utils/utils";
+import { makeRedirectUri, ResponseType, useAuthRequest } from "expo-auth-session";
+import fetchProxied from "../features/utils/proxy";
+import { encodeBase64 } from "../features/utils/utils";
+import { user } from "../features/reddit";
+import { reddit } from "../../config";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -14,12 +15,6 @@ const SCOPES = ["identity", "edit", "subscribe", "save", "submit", "read", "acco
 const DISCOVERY = {
 	authorizationEndpoint: "https://www.reddit.com/api/v1/authorize.compact",
 	tokenEndpoint: "https://www.reddit.com/api/v1/access_token",
-};
-
-const CLIENT_IDS = {
-	"exp://192.168.0.180:19000": "sPkxYwuR4dDRTVO9uB1jGw",
-	"http://localhost:19006": "_RXhpFBgKb1kste3RGJTlg",
-	"nexilis://redirect": "kXGu9uyC8hl9PIsff9Zqfg"
 };
 
 async function fetchAccessToken(code, clientId, redirectUri) {
@@ -48,7 +43,7 @@ export default function AccountScreen() {
 		scheme: "nexilis://redirect",
 	});
 
-	const clientId = CLIENT_IDS[redirectUri] ?? CLIENT_IDS["nexilis://redirect"];
+	const clientId = reddit.clientIds[redirectUri] ?? reddit.clientIds["nexilis://redirect"];
 
 	const [request, response, promptAsync] = useAuthRequest(
 		{

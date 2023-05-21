@@ -1,11 +1,10 @@
 import { Image, View } from "react-native";
 import Styles from "../../constants/Styles";
-import { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import StyledPressable from "../styled/StyledTouchableOpacity";
 import Colors from "../../constants/Colors";
-import { removeUrlQueries } from "../../utils/utils";
 import Routes from "../../constants/Routes";
+import { removeUrlQueries } from "../../features/utils/utils";
 
 export default function HeaderRight(props) {
 	return (

@@ -6,8 +6,8 @@ import Colors from "../../constants/Colors";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import Comment from "./Comment";
 import { Audio, Video, ResizeMode } from "expo-av";
-import { decodeString } from "../../utils/utils";
-import { fetchComments } from "../../utils/feed";
+import { decodeString } from "../../features/utils/utils";
+import { fetchComments } from "../../features/reddit/feed";
 
 const DISPLAY_MDOE = {
 	PREVIEW: 0,
