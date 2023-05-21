@@ -17,7 +17,7 @@ const DEFAULTS = {
 
 const POSTS_PER_FETCH = 4; // Should be 10
 
-export class FeedManager {
+export default class FeedManager {
 	constructor(subreddits = DEFAULTS.subreddits, sort = DEFAULTS.sort, allowNsfw = DEFAULTS.allowNsfw) {
 		this.subreddits = subreddits;
 		this.sort = sort;

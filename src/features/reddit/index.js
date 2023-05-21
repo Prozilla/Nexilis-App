@@ -1,4 +1,4 @@
-import { FeedManager } from "./managers/feed";
+import FeedManager from "./managers/feed";
 import SearchManager from "./managers/search";
 import UserManager from "./managers/user";
 
