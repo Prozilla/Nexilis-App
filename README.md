@@ -1,3 +1,9 @@
+![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/Prozilla/Nexilis-app/react-native)
+![GitHub Repo stars](https://img.shields.io/github/stars/Prozilla/Nexilis-app?color=yellow&label=%E2%AD%90%20Stars)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/Prozilla/Nexilis-app?label=Commits)
+![GitHub repo size](https://img.shields.io/github/repo-size/Prozilla/Nexilis-app?color=red&label=Repo%20size)
+![GitHub](https://img.shields.io/github/license/Prozilla/Nexilis?label=License)
+
 <img src="github/Logo.png" width="128" height="128"/>
 
 # Nexilis
