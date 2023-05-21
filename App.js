@@ -63,9 +63,9 @@ export default function App() {
 							},
 							headerTintColor: Colors.text.primary,
 							headerShadowVisible: true,
-							headerLeft: (props) => <HeaderLeft {...props} navigation={navigation}/>,
-							headerTitle: (props) => <HeaderTitle {...props} navigation={navigation}/>,
-							headerRight: (props) => <HeaderRight {...props} navigation={navigation}/>,
+							headerLeft: (props) => <HeaderLeft {...props}/>,
+							headerTitle: (props) => <HeaderTitle {...props}/>,
+							headerRight: (props) => <HeaderRight {...props}/>,
 							fullScreenGestureEnabled: true,
 							animationDuration: 250,
 						})}

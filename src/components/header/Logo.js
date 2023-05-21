@@ -1,11 +1,11 @@
 import { View } from "react-native";
 import Svg, { Path } from "react-native-svg";
 
-export default function Logo(props) {
+export default function Logo({ size }) {
 	return (
 		<View style={{
-			width: props?.size ?? 30,
-			height: props?.size ?? 30,
+			width: size ?? 30,
+			height: size ?? 30,
 			aspectRatio: 1,
 		}}>
 			<Svg xmlns="http://www.w3.org/2000/svg" 

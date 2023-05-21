@@ -5,13 +5,15 @@ import StyledPressable from "../styled/StyledTouchableOpacity";
 import Colors from "../../constants/Colors";
 import Routes from "../../constants/Routes";
 import { getCurrentRoute } from "../../features/native/navigtion";
+import { useNavigation } from "@react-navigation/native";
 
-export default function FooterView(props) {
+export default function FooterView({ children }) {
 	const route = getCurrentRoute();
+	const navigation = useNavigation();
 
 	return (
 		<View style={[Styles.container]}>
-			{props.children}
+			{children}
 			<View style={[{
 				flexDirection: "row",
 				alignItems: "center",
@@ -21,7 +23,7 @@ export default function FooterView(props) {
 				borderTopColor: Colors.background.tertiary,
 				borderTopWidth: 2
 			}]}>
-				<StyledPressable onPress={() => props.navigation.navigate(Routes.HOME)}>
+				<StyledPressable onPress={() => navigation.navigate(Routes.HOME)}>
 					<FontAwesomeIcon
 						icon="house"
 						color={route == Routes.HOME ? Colors.text.primary : Colors.text.secondary}

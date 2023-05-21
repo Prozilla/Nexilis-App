@@ -2,8 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import Styles from "../../constants/Styles";
 import Colors from "../../constants/Colors";
 
-export default function Comment(props) {
-	const comment = props.data;
+export default function Comment({ data: comment }) {
 	const hasChildren = (comment.children != null && comment.children.length > 0);
 
 	let children = null;

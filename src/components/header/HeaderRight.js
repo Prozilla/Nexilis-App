@@ -7,13 +7,15 @@ import Routes from "../../constants/Routes";
 import { removeUrlQueries } from "../../features/utils/utils";
 import { useContext } from "react";
 import { UserDataContext } from "../../hooks/contexts";
+import { useNavigation } from "@react-navigation/native";
 
-export default function HeaderRight(props) {
+export default function HeaderRight() {
 	const [userData] = useContext(UserDataContext);
+	const navigation = useNavigation();
 
 	return (
 		<View style={[Styles.headerSection, { gap: 15, marginRight: 10 }]}>
-			<StyledPressable onPress={() => props.navigation.navigate(Routes.ACCOUNT)}>
+			<StyledPressable onPress={() => navigation.navigate(Routes.ACCOUNT)}>
 				{
 					userData?.icon_img
 					?	<Image
