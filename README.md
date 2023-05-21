@@ -20,7 +20,7 @@ First of all, you will need to change `reddit.clientIds` in `config.js`, the key
 To start using your modified version of Nexilis, you will need to be running two commands simultaneously: `npm run start|ios|android|web` and `npm run server`. I recommend using two terminals, one for each command. Here's what each command does:
 
 - `npm run start|ios|android|web` - Tells Expo to start the application. When you make any changes to your application, it will automatically be rebuilt. You can optionally specify a platform to run the application on. I recommend using `npm run web` for testing, as this will open the application in your browser.
-- `npm run server` - This command starts an Express server with a very simple [API](api) that allows Reddit authorization. Therefore, running this command is obsolete if you do not plan on using the authorization functionality.
+- `npm run server` - This command starts an Express server with a very simple [API](api) that makes the Reddit authorization work. Therefore, running this command is obsolete if you do not plan on using the authorization functionality.
 
 ## History
 This is the mobile app version of [Nexilis](https://nexilis.netlify.app/) [(repo)](https://github.com/Prozilla/Nexilis), a website powered by the Reddit API.
